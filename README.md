@@ -1,4 +1,4 @@
-# Sunfounder SensorKit Python code for Raspberry Pi
+## Sunfounder SensorKit Python code for Raspberry Pi
 
 website:
 	www.sunfounder.com
