@@ -37,8 +37,8 @@ def setup():
 def destroy():
 	GPIO.cleanup()
 
-def getResult(chn):     				# Get ADC result, input channal
-	if chn ==0 or chn ==1:
+def getResult():     				# Get ADC result, input channal
+	if chn == 0 or chn == 1:
 		GPIO.setup(ADC_DIO, GPIO.OUT)
 		GPIO.output(ADC_CS, 0)
 		
@@ -51,7 +51,49 @@ def getResult(chn):     				# Get ADC result, input channal
 		GPIO.output(ADC_CLK, 1);  time.sleep(0.000002)
 		GPIO.output(ADC_CLK, 0)
 	
-		GPIO.output(ADC_DIO, chn);  time.sleep(0.000002)
+		GPIO.output(ADC_DIO, 0);  time.sleep(0.000002)
+	
+		GPIO.output(ADC_CLK, 1)
+		GPIO.output(ADC_DIO, 1);  time.sleep(0.000002)
+		GPIO.output(ADC_CLK, 0)
+		GPIO.output(ADC_DIO, 1);  time.sleep(0.000002)
+	
+		dat1 = 0
+		for i in range(0, 8):
+			GPIO.output(ADC_CLK, 1);  time.sleep(0.000002)
+			GPIO.output(ADC_CLK, 0);  time.sleep(0.000002)
+			GPIO.setup(ADC_DIO, GPIO.IN)
+			dat1 = dat1 << 1 | GPIO.input(ADC_DIO)  
+		
+		dat2 = 0
+		for i in range(0, 8):
+			dat2 = dat2 | GPIO.input(ADC_DIO) << i
+			GPIO.output(ADC_CLK, 1);  time.sleep(0.000002)
+			GPIO.output(ADC_CLK, 0);  time.sleep(0.000002)
+		
+		GPIO.output(ADC_CS, 1)
+		GPIO.setup(ADC_DIO, GPIO.OUT)
+
+		if dat1 == dat2:
+			return dat1
+		else:
+			return 0
+
+def getResult1():     				# Get ADC result, input c with Channel 1
+	if chn == 0 or chn == 1:
+		GPIO.setup(ADC_DIO, GPIO.OUT)
+		GPIO.output(ADC_CS, 0)
+		
+		GPIO.output(ADC_CLK, 0)
+		GPIO.output(ADC_DIO, 1);  time.sleep(0.000002)
+		GPIO.output(ADC_CLK, 1);  time.sleep(0.000002)
+		GPIO.output(ADC_CLK, 0)
+	
+		GPIO.output(ADC_DIO, 1);  time.sleep(0.000002)
+		GPIO.output(ADC_CLK, 1);  time.sleep(0.000002)
+		GPIO.output(ADC_CLK, 0)
+	
+		GPIO.output(ADC_DIO, 1);  time.sleep(0.000002)
 	
 		GPIO.output(ADC_CLK, 1)
 		GPIO.output(ADC_DIO, 1);  time.sleep(0.000002)

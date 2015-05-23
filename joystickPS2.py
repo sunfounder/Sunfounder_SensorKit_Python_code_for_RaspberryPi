@@ -22,14 +22,14 @@ def setup():
 	state = ['up', 'down', 'left', 'right']	
 
 def getResult():	#get joystick result
-	if ADC0832.getResult(1) == 0:
+	if ADC0832.getResult1() == 0:
 		return 1		#up
-	if ADC0832.getResult(1) == 255:
+	if ADC0832.getResult1() == 255:
 		return 2		#down
 
-	if ADC0832.getResult(0) == 0:
+	if ADC0832.getResult() == 0:
 		return 3		#left
-	if ADC0832.getResult(0) == 255:
+	if ADC0832.getResult() == 255:
 		return 4		#right
 
 	if GPIO.input(btn) == 1:
