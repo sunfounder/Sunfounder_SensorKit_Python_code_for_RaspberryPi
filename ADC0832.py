@@ -38,7 +38,6 @@ def destroy():
 	GPIO.cleanup()
 
 def getResult():     				# Get ADC result, input channal
-	if chn == 0 or chn == 1:
 		GPIO.setup(ADC_DIO, GPIO.OUT)
 		GPIO.output(ADC_CS, 0)
 		
@@ -80,7 +79,6 @@ def getResult():     				# Get ADC result, input channal
 			return 0
 
 def getResult1():     				# Get ADC result, input c with Channel 1
-	if chn == 0 or chn == 1:
 		GPIO.setup(ADC_DIO, GPIO.OUT)
 		GPIO.output(ADC_CS, 0)
 		
@@ -123,7 +121,7 @@ def getResult1():     				# Get ADC result, input c with Channel 1
 
 def loop():
 	while True:
-		res = getResult(0)
+		res = getResult()
 		print 'res = %d' % res
 		time.sleep(0.4)
 
