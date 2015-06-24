@@ -34,7 +34,7 @@ def change_detected(channel):
 # Register event-listener on falling and raising
 # edge on HALL-sensor input. Call "change_detected" as
 # callback
-GPIO.add_event_detect(HALL, GPIO.BOTH, change_detected)
+GPIO.add_event_detect(HALL, GPIO.BOTH, change_detected, bouncetime=25)
 
 # The main-loop does nothing. All is done by the event-listener
 try:
