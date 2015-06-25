@@ -90,8 +90,9 @@ def getResult1():
 
 def loop():
 	while True:
-		res = getResult()
-		print 'res = %d' % res
+                res0 = getResult(0)
+		res1 = getResult(1)
+		print 'res0 = %d, res1 = %d' % (res0,res1)
 		time.sleep(0.4)
 
 if __name__ == '__main__':		# Program start from here
