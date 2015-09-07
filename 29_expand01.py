@@ -36,7 +36,7 @@ def map(x, in_min, in_max, out_min, out_max):
 def ds18b20Init():
 	global ds18b20
 	for i in os.listdir('/sys/bus/w1/devices'):
-		if i != 'w1-bus-master1':
+		if i[:2] == '28':
 			ds18b20 = i
 
 def setup():
