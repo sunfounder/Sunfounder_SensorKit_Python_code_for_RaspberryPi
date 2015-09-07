@@ -45,12 +45,9 @@ def setup():
 	GPIO.setup(Buzzer, GPIO.OUT)
 	GPIO.output(Buzzer, 1)
 	# RGB setup:
-	GPIO.setup(LedRed, GPIO.OUT)
-	GPIO.setup(LedGreen, GPIO.OUT)
-	GPIO.setup(LedBlue, GPIO.OUT)
-	GPIO.output(LedRed, 1)
-	GPIO.output(LedGreen, 1)
-	GPIO.output(LedBlue, 1)
+	GPIO.setup(LedRed, GPIO.OUT, initial=GPIO.LOW)
+	GPIO.setup(LedGreen, GPIO.OUT, initial=GPIO.LOW)
+	GPIO.setup(LedBlue, GPIO.OUT, initial=GPIO.LOW)
 	# DS18B20 setup:
 	ds18b20Init()
 
@@ -78,29 +75,29 @@ def loop():
 
 		# Under/Over limit alarm:
 		if temp < low:
-			GPIO.output(LedBlue, 0);
-			GPIO.output(LedRed, 1);
-			GPIO.output(LedGreen, 1);
+			GPIO.output(LedBlue, 1);
+			GPIO.output(LedRed, 0);
+			GPIO.output(LedGreen, 0);
 			for i in range(0, 4):
 				beep(0.25)
 
 		if temp >= low and temp < high:
-			GPIO.output(LedBlue, 1);
-			GPIO.output(LedRed, 1);
-			GPIO.output(LedGreen, 0);
+			GPIO.output(LedBlue, 0);
+			GPIO.output(LedRed, 0);
+			GPIO.output(LedGreen, 1);
 			time.sleep(1)
 
 		if temp >= high:
-			GPIO.output(LedBlue, 1);
-			GPIO.output(LedRed, 0);
-			GPIO.output(LedGreen, 1);
+			GPIO.output(LedBlue, 0);
+			GPIO.output(LedRed, 1);
+			GPIO.output(LedGreen, 0);
 			for i in range(0, 8):
 				beep(0.125)
 
 def destroy():
-	GPIO.output(LedRed, 1)
-	GPIO.output(LedGreen, 1)
-	GPIO.output(LedBlue, 1)
+	GPIO.output(LedRed, 0)
+	GPIO.output(LedGreen, 0)
+	GPIO.output(LedBlue, 0)
 	GPIO.output(Buzzer, 1)
 	GPIO.cleanup()
 
