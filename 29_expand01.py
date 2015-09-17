@@ -58,8 +58,8 @@ def loop():
 		print 'For example: sudo python 29_expand01.py 29 31\n'
 		destroy()
 		quit()
-	low = sys.argv[1]
-	high = sys.argv[2]
+	low = float(sys.argv[1])
+	high = float(sys.argv[2])
 	if low >= high:
 		print 'Parameters error, lower limit should be less than upper limit'
 		destroy()
