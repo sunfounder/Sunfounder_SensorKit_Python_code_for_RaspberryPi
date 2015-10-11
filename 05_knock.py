@@ -16,18 +16,15 @@ def swLed(ev=None):
 	global Led_status
 	Led_status = not Led_status
 	GPIO.output(LedPin, Led_status)  # switch led status(on-->off; off-->on)
-	if Led_status == 1:
-		print 'led off...'
-	else:
-		print '...led on'
+        print "LED: " + ("on" if Led_status else "off")
 
 def loop():
-	GPIO.add_event_detect(KnockPin, GPIO.FALLING, callback=swLed) # wait for falling
+	GPIO.add_event_detect(KnockPin, GPIO.FALLING, callback=swLed, bouncetime=200) # wait for falling
 	while True:
 		pass   # Don't do anything
 
 def destroy():
-	GPIO.output(LedPin, GPIO.HIGH)     # led off
+	GPIO.output(LedPin, GPIO.LOW)     # led off
 	GPIO.cleanup()                     # Release resource
 
 if __name__ == '__main__':     # Program start from here
