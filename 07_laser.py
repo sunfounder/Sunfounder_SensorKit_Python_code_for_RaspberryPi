@@ -12,14 +12,14 @@ def setup():
 def loop():
 	while True:
 		print '...led on'
-		GPIO.output(LedPin, GPIO.LOW)  # led on
+		GPIO.output(LedPin, GPIO.HIGH)  # led on
 		time.sleep(0.5)
 		print 'led off...'
-		GPIO.output(LedPin, GPIO.HIGH) # led off
+		GPIO.output(LedPin, GPIO.LOW) # led off
 		time.sleep(0.5)
 
 def destroy():
-	GPIO.output(LedPin, GPIO.HIGH)     # led off
+	GPIO.output(LedPin, GPIO.LOW)     # led off
 	GPIO.cleanup()                     # Release resource
 
 if __name__ == '__main__':     # Program start from here
