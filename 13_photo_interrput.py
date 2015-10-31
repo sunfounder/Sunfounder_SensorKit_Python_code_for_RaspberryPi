@@ -8,19 +8,19 @@ def setup():
 	GPIO.setmode(GPIO.BOARD)       # Numbers GPIOs by physical location
 	GPIO.setup(LedPin, GPIO.OUT)   # Set LedPin's mode is output
 	GPIO.setup(LightBreakPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-	GPIO.output(LedPin, GPIO.HIGH) # Set LedPin high(+3.3V) to off led
+	GPIO.output(LedPin, GPIO.LOW) # Set LedPin low to off led
+
+def swLed(channel):
+	status = GPIO.input(LightBreakPin)
+	print "LED: on" if status else "LED: off"
+	GPIO.output(LedPin,status)
 
 def loop():
+	GPIO.add_event_detect(LightBreakPin, GPIO.BOTH, callback=swLed) # wait for falling
 	while True:
-		if GPIO.input(LightBreakPin) == GPIO.LOW:
-			print '...led on'
-			GPIO.output(LedPin, GPIO.LOW)  # led on
-		else:
-			print 'led off...'
-			GPIO.output(LedPin, GPIO.HIGH) # led off
-
+		pass
 def destroy():
-	GPIO.output(LedPin, GPIO.HIGH)     # led off
+	GPIO.output(LedPin, GPIO.LOW)     # led off
 	GPIO.cleanup()                     # Release resource
 
 if __name__ == '__main__':     # Program start from here
