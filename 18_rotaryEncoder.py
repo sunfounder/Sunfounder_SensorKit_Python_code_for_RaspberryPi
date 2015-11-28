@@ -4,6 +4,7 @@ import time
 
 RoAPin = 11    # pin11
 RoBPin = 12    # pin12
+BtnPin = 13    # Button Pin
 
 globalCounter = 0
 
@@ -15,6 +16,8 @@ def setup():
 	GPIO.setmode(GPIO.BOARD)       # Numbers GPIOs by physical location
 	GPIO.setup(RoAPin, GPIO.IN)    # input mode
 	GPIO.setup(RoBPin, GPIO.IN)
+	GPIO.setup(BtnPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+	GPIO.add_event_detect(BtnPin, GPIO.FALLING, callback=btnISR)
 
 def rotaryDeal():
 	global flag
@@ -28,15 +31,23 @@ def rotaryDeal():
 	if flag == 1:
 		flag = 0
 		if (Last_RoB_Status == 0) and (Current_RoB_Status == 1):
-			globalCounter = globalCounter + 1
-		if (Last_RoB_Status == 1) and (Current_RoB_Status == 0):
 			globalCounter = globalCounter - 1
+		if (Last_RoB_Status == 1) and (Current_RoB_Status == 0):
+			globalCounter = globalCounter + 1
+
+def btnISR(channel):
+	global globalCounter
+	globalCounter = 0
 
 def loop():
 	global globalCounter
+	tmp = 0	# Rotary Temperary
+
 	while True:
 		rotaryDeal()
-		print 'globalCounter = %d' % globalCounter
+		if tmp != globalCounter:
+			print 'globalCounter = %d' % globalCounter
+			tmp = globalCounter
 
 def destroy():
 	GPIO.cleanup()             # Release resource
